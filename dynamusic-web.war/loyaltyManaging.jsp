@@ -63,9 +63,8 @@
           			<dsp:textarea bean="LoyaltyFormHandler.value.description" rows="5" cols="40"/><br>
           			<br>
           			
-         			<dsp:input type="submit" bean="LoyaltyFormHandler.create" value="Create transaction"/>
-         			<dsp:input type="submit" bean="LoyaltyFormHandler.cancel" value="Cancel"/>          				
-          			<dsp:input type="hidden" bean="LoyaltyFormHandler.createSuccessURL" value="successLoyaltyAdd.jsp"/>          			
+         				<dsp:input type="submit" bean="LoyaltyFormHandler.create" value="Create transaction"/>
+         				<dsp:input type="submit" bean="LoyaltyFormHandler.cancel" value="Cancel"/>
           		</dsp:form>        		
          	</dsp:oparam>
          	<dsp:oparam name="default">

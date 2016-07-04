@@ -50,22 +50,18 @@ public class LoyaltyFormHandler extends RepositoryFormHandler {
 				           logDebug("Trying to rollback transaction");
 					}
 					getTransactionManager().setRollbackOnly();
-				} catch (Exception e) {					
-					if (isLoggingDebug()){ 
-				           logDebug("Fail to rollback transaction", e);
-					}
+				} catch (Exception e) {
 					if (isLoggingError()) {
 	                    logError("Unable to set rollback for transaction", e);					
 					}
+					addFormException(new DropletException("Transaction is not rolled back, no data are stored"));
 				}
 			}			
 		} catch (TransactionDemarcationException e1) {
-			if (isLoggingDebug()){ 
-		           logDebug("Creating transaction demarcation failed", e1);
-			}
 			if (isLoggingError()) {
 	             logError("Creating transaction demarcation failed", e1);
-			}  
+			}
+			addFormException(new DropletException("Creating transaction failed, no data are stored"));
 		}			
 	}	
 	
@@ -88,9 +84,6 @@ public class LoyaltyFormHandler extends RepositoryFormHandler {
 				validate = false;
 			}
 		} catch (RepositoryException e) {
-			if (isLoggingDebug()){ 
-		           logDebug("Exception trying to validate user " + inputUserId, e);
-			}
 			if (isLoggingError()) {
              logError("Exception trying to validate user " + inputUserId, e);					
 			}
@@ -131,23 +124,18 @@ public class LoyaltyFormHandler extends RepositoryFormHandler {
 				loyaltyManager.addLoyaltyToUser(getValueProperty("profileId").toString(), getRepositoryId());
 			}
 		} catch (Exception e) {
-			if (isLoggingDebug()){ 
-		           logDebug("Exception occured, adding FormException and try to rollback transaction", e);
-			}
 			if (isLoggingError()) {
                 logError("Trying to add created loyaltyTransaction to user", e);					
 			}			
 			addFormException(new DropletException(e.getMessage()));
-			
+
 			try {
 				getTransactionManager().setRollbackOnly();
 			} catch (Exception e1) {
-				if (isLoggingDebug()){ 
-			           logDebug("Fail to rollback transaction", e1);
-				}
 				if (isLoggingError()) {
                     logError("Unable to set rollback for transaction", e1);					
 				}
+				addFormException(new DropletException("Transaction is not rolled back, no data are stored"));
 			}
 		}finally{
 			if (isLoggingDebug()){ 
@@ -156,12 +144,10 @@ public class LoyaltyFormHandler extends RepositoryFormHandler {
 			try {
 				getTransactionDemarcation().end();
 			} catch (TransactionDemarcationException e) {
-				if (isLoggingDebug()){ 
-			           logDebug("Ending transaction demarcation failed", e);
-				}
 				if (isLoggingError()) {
 		             logError("Ending transaction demarcation failed", e);
 				}
+				addFormException(new DropletException("Ending transaction failed, no data are stored"));
 			}
 		}
 	}

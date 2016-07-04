@@ -52,19 +52,13 @@ public class LoyaltyManager extends GenericService {
 				if (userLoyaltyTransactions != null && loyaltyTransactionForAdd != null) {
 					userLoyaltyTransactions.add(loyaltyTransactionForAdd);				
 				}
-			} catch (Exception e) {	
-				if (isLoggingDebug()){ 
-			           logDebug("Exception occured, try to rollback transaction", e);
-				}
+			} catch (Exception e) {
 				if (isLoggingError()) {
                     logError("Exception occured trying to add loyaltyTransaction " + pLoyaltyId + " to user " + pUserId, e);					
 				}
 				try {
 					getTransactionManager().setRollbackOnly();
 				} catch (Exception e1) {
-					if (isLoggingDebug()){ 
-				           logDebug("Fail to rollback transaction", e1);
-					}
 					if (isLoggingError()) {
 	                     logError("Unable to set rollback for transaction", e1);					
 					}     
@@ -77,9 +71,6 @@ public class LoyaltyManager extends GenericService {
 				td.end();
 			}
 		}catch (TransactionDemarcationException e) {
-			if (isLoggingDebug()){ 
-		           logDebug("Creating transaction demarcation failed", e);
-			}
 			if (isLoggingError()) {
 	             logError("Creating transaction demarcation failed", e);
 			}     

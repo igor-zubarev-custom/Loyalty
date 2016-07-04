@@ -79,9 +79,7 @@
             <br>
           
             <!-- defines the URL to go to on success (relative to 'action')-->
-            <dsp:input bean="ProfileFormHandler.updateSuccessURL" type="hidden" value="home.jsp"/>
             <dsp:input bean="ProfileFormHandler.update" type="Submit" value="Update"/>
-            <dsp:input bean="ProfileFormHandler.cancelURL" type="hidden" value="home.jsp"/>
             <dsp:input bean="ProfileFormHandler.cancel" type="Submit" value="Cancel"/>
           
           </dsp:form><br>

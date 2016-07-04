@@ -8,6 +8,15 @@ import atg.servlet.DynamoHttpServletResponse;
 
 public class LoyaltyNumberFormHandler extends GenericFormHandler {
 	private int number;
+	private String setSuccessURL;
+
+	public String getSetSuccessURL() {
+		return setSuccessURL;
+	}
+
+	public void setSetSuccessURL(String setSuccessURL) {
+		this.setSuccessURL = setSuccessURL;
+	}
 
 	public int getNumber() {
 		return number;
@@ -21,7 +30,7 @@ public class LoyaltyNumberFormHandler extends GenericFormHandler {
 		if (isLoggingDebug()) {
 			logDebug("Adding number for quantity visible loyalty transactions");
 		}
-		response.sendLocalRedirect("updateProfile.jsp", request);
+		response.sendLocalRedirect(getSetSuccessURL(), request);
 		return false;
 	}	
 
